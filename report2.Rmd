@@ -1,0 +1,48 @@
+---
+header-includes: \usepackage{caption}
+output:
+  word_document: default
+  pdf_document,: default
+  html_document: default
+---
+
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+library(data.table)
+library(knitr) # for kable
+```
+# SUBJECT:
+
+```{r fig1, echo=FALSE, message=FALSE, warning=FALSE}
+plot_USGS2()
+```
+
+
+```{r fig2, echo=FALSE, message=FALSE, warning=FALSE}
+ssd.plot1()
+``` 
+
+\captionsetup[table]{labelformat=empty}
+
+```{r table3, echo=FALSE, message=FALSE, warning=FALSE, results='asis', tab.cap=NULL}
+data <- SSDdata()
+knitr::kable(data, caption = "Table 3.  Summary of data used to generate an SSD.")
+```
+
+SSD tool (in R) was used to fit five sigmoid-shaped models to the acute toxicity values including the Logistic, Normal, Weibull, Extreme Value (Gompertz) and Gumbel (Fisher-Tippett) models. The model with the best fit to the data was used for generating the SSD. If multiple endpoint values were available for the same species, the geometric mean of these values was used to represent that species in the SSD.
+
+Information about the fit and a visualization for each of the models are shown in Tables 4 and 5 and Figure 7.  The ... model seemed to have the best fit and also represented the most conservative HC estimates on the lower end of the curve. The HC1, 5, and 10 values were ..., ..., and ... µg/L, respectively.
+
+```{r table4, echo=FALSE, message=FALSE, warning=FALSE, results='asis', tab.cap=NULL}
+data <- mrkdwn.gof()
+knitr::kable(data, caption = "Table 4.  Goodness-of-fit tests results", digits=3)
+```
+
+```{r table5, echo=FALSE, message=FALSE, warning=FALSE, results='asis', tab.cap=NULL}
+data <- ssd.summary()
+knitr::kable(data, caption = "Table 5.  Summary of model fits of the aquatic plant species sensitivity distributions.")
+```
+
+```{r fig3, echo=FALSE, message=FALSE, warning=FALSE}
+ssd.plot2()
+```
